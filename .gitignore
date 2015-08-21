@@ -1,0 +1,12 @@
+/swing_timer_animation/dist/
+*.xml
+
+*.properties
+
+*.class
+
+*.xml
+
+basic_image/nbproject/private/private.xml
+
+*.mf
