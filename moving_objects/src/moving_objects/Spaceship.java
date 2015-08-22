@@ -1,27 +1,27 @@
 
 package moving_objects;
 
-import java.awt.Image;
 import java.awt.event.KeyEvent;
-import javax.swing.ImageIcon;
+import java.util.ArrayList;
 
 
-public class Spaceship {
+public class Spaceship extends Sprite {
+    
     private int direction_x;
     private int direction_y;
-    private int position_x;
-    private int position_y;
-    private Image image;
-    
-    public Spaceship() {
+    private ArrayList<Missile> missiles;
+
+    public Spaceship(int position_x, int position_y) {
+        super(position_x, position_y);
+        
         initialize_spaceship();
     }
     
     private void initialize_spaceship() {
-        ImageIcon ii = new ImageIcon("spaceship.png");
-        image = ii.getImage();
-        position_x = 40;
-        position_y = 60;  
+        
+        missiles = new ArrayList();
+        load_image("spaceship.png"); 
+        get_image_dimensions(); 
     }
     
     public void move() {
@@ -29,16 +29,8 @@ public class Spaceship {
         position_y += direction_y;
     }
     
-    public int get_position_x() {
-        return position_x;
-    }
-    
-    public int get_position_y() {
-        return position_y;
-    }
-    
-    public Image get_image() {
-        return image;
+    public ArrayList get_missiles() {
+        return missiles;
     }
     
     public void key_pressed(KeyEvent e) {
@@ -57,6 +49,9 @@ public class Spaceship {
                 break;
             case KeyEvent.VK_DOWN:
                 direction_y = 1;
+                break;
+            case KeyEvent.VK_SPACE:
+                shoot_missile();
                 break;
         
         } //end switch checking key pressed
@@ -85,5 +80,9 @@ public class Spaceship {
     
     } // end key_released method
     
+    public void shoot_missile() {
+        missiles.add(new Missile(position_x + image_width, position_y + image_height / 2));
+    }
 
+    
 }
