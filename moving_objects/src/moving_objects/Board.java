@@ -122,13 +122,28 @@ public class Board extends JPanel implements ActionListener{
     }
     
     private void draw_game_over(Graphics g) {
-        String message = "Game Over";
+        int aliens_left = aliens.size();
+        String message;
+        String message2;
+        
+        if (aliens_left == 0) {
+            message = "You WON!";
+            message2 = "Congratulations!"; 
+            setBackground(Color.GREEN);
+        }
+        
+        else {
+            message = "Game Over";
+            message2 = aliens.size() + " aliens left."; 
+            setBackground(Color.RED);
+        }
         Font small = new Font("Helvetica", Font.BOLD, 16);
         FontMetrics fm = getFontMetrics(small);
         
         g.setColor(Color.WHITE);
         g.setFont(small);
         g.drawString(message, (WINDOW_HEIGHT - fm.stringWidth(message)) / 2, WINDOW_HEIGHT / 2);
+        g.drawString(message2, (WINDOW_HEIGHT - fm.stringWidth(message2)) / 2, WINDOW_HEIGHT / 2 + 30);
     
     }
 
