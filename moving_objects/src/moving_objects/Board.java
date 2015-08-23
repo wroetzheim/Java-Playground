@@ -22,8 +22,8 @@ public class Board extends JPanel implements ActionListener{
     
     private final int INITIAL_POSITION_X = 30;
     private final int INITIAL_POSITION_Y = 40;
-    private final int WINDOW_WIDTH = 1000;
-    private final int WINDOW_HEIGHT = 800;
+    public static final int WINDOW_WIDTH = 1000;
+    public static final int WINDOW_HEIGHT = 700;
     private Timer timer;
     private Spaceship spaceship;
     private final int DELAY = 5;
@@ -39,7 +39,7 @@ public class Board extends JPanel implements ActionListener{
         initialize_board();
     }
     private void number_of_enemies(int enemies) {
-        int[][] position_grid = new int[enemies][2];
+        position_grid = new int[enemies][2];
     }
     private void initialize_board() {
         
@@ -101,7 +101,7 @@ public class Board extends JPanel implements ActionListener{
         Toolkit.getDefaultToolkit().sync();
     }
     
-    private static void draw_background(Graphics g) {
+    private void draw_background(Graphics g) {
         
         g.drawImage(Sprite.load_background("space_background.jpg"), 0, 0, null);
     }
@@ -235,22 +235,16 @@ public class Board extends JPanel implements ActionListener{
                 if (k == 0) {    
                     an_alien.move();
                     k = 1;
-                }
-                
+                }                
                 else {
                     an_alien.move();
                     an_alien.move();
                     k = 0;
-                }
-                   
-                
-                
-            }
-                
-            
+                } // end if k condition  
+            }         
             else {            
                 aliens.remove(i);
-            }
+            } // end if visible condition
         }
     } // end update_aliens method
     

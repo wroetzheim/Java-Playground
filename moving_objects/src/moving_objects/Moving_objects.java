@@ -15,7 +15,7 @@ public class Moving_objects extends JFrame{
         
         add(new Board());
         
-        setSize(1000, 800);
+        setSize(1000, 700);
         setResizable(false);
         
         setTitle("Moving Object Example");

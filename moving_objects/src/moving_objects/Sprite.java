@@ -25,13 +25,13 @@ public class Sprite {
     
     protected void load_image(String file_name) {
 
-        ImageIcon ii = new ImageIcon(file_name);
+        ImageIcon ii = new ImageIcon(getClass().getClassLoader().getResource("images/"+file_name));
         image = ii.getImage();
     }
     
     protected static Image load_background(String file_name) {
         
-        ImageIcon bi = new ImageIcon(file_name);
+        ImageIcon bi = new ImageIcon(Sprite.class.getClassLoader().getResource("images/"+file_name));
         background = bi.getImage();
         return background;
     }

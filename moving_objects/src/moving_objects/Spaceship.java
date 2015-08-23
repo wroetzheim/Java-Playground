@@ -25,8 +25,21 @@ public class Spaceship extends Sprite {
     }
     
     public void move() {
-        position_x += direction_x;
-        position_y += direction_y;
+        
+        if (position_x +  direction_x <= -1 || position_x + direction_x >= Board.WINDOW_WIDTH - image_width) {
+            position_x += 0;
+        }
+        else {
+            position_x += direction_x; 
+        }
+        
+        if (position_y + direction_y <= -1 || position_y + direction_y >= Board.WINDOW_HEIGHT - image_height +5) {
+           position_y += 0; 
+        }
+        else {
+           position_y += direction_y; 
+        }
+        
     }
     
     public ArrayList get_missiles() {
@@ -39,7 +52,7 @@ public class Spaceship extends Sprite {
         switch (key) {
             
             case KeyEvent.VK_LEFT:
-                direction_x = -2;
+                direction_x = -2; 
                 break;
             case KeyEvent.VK_RIGHT:
                 direction_x = 2;
