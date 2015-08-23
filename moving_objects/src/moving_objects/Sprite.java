@@ -14,6 +14,7 @@ public class Sprite {
     protected int image_height;
     protected boolean visible;
     protected Image image;
+    protected static Image background;
     
     public Sprite(int x, int y) {
 
@@ -26,6 +27,13 @@ public class Sprite {
 
         ImageIcon ii = new ImageIcon(file_name);
         image = ii.getImage();
+    }
+    
+    protected static Image load_background(String file_name) {
+        
+        ImageIcon bi = new ImageIcon(file_name);
+        background = bi.getImage();
+        return background;
     }
     
     protected void get_image_dimensions() {
@@ -54,8 +62,14 @@ public class Sprite {
         visible = visible_value;
     }
     
-    public Rectangle getBounds() {
-        return new Rectangle(position_x, position_y, image_width, image_height);
+    public Rectangle getBounds(String sprite_type) {
+        if (sprite_type == "player") {
+            return new Rectangle(position_x, position_y, image_width, image_height);
+        }
+        else {
+            return new Rectangle(position_x, position_y, image_width, image_height);
+        }
+        
     }
     
 } // end Sprite class

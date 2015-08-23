@@ -1,10 +1,12 @@
 
 package moving_objects;
 
+import java.util.Random;
+
 
 public class Alien extends Sprite {
     
-    private final int INITIAL_POSITION_X = 600;
+    private final int INITIAL_POSITION_X = 1200;
     
     public Alien(int position_x, int position_y) {
         super(position_x, position_y);
@@ -15,14 +17,17 @@ public class Alien extends Sprite {
     
     private void initialize_alien() {
         
-        load_image("alien.png");
+        load_image("spaceship_enemy.png");
         get_image_dimensions();
     
     } // end initialize_alien method
     
+    
+    
+     
     public void move() {
         
-        if (position_x < 0) {
+        if (position_x < -20) {
             position_x = INITIAL_POSITION_X;
         }
         

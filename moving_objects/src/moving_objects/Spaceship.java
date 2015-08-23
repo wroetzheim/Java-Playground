@@ -20,7 +20,7 @@ public class Spaceship extends Sprite {
     private void initialize_spaceship() {
         
         missiles = new ArrayList();
-        load_image("spaceship.png"); 
+        load_image("starship.png"); 
         get_image_dimensions(); 
     }
     
@@ -39,16 +39,16 @@ public class Spaceship extends Sprite {
         switch (key) {
             
             case KeyEvent.VK_LEFT:
-                direction_x = -1;
+                direction_x = -2;
                 break;
             case KeyEvent.VK_RIGHT:
-                direction_x = 1;
+                direction_x = 2;
                 break;
             case KeyEvent.VK_UP:
-                direction_y = -1;
+                direction_y = -2;
                 break;
             case KeyEvent.VK_DOWN:
-                direction_y = 1;
+                direction_y = 2;
                 break;
             case KeyEvent.VK_SPACE:
                 shoot_missile();

@@ -11,45 +11,48 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.awt.event.KeyEvent;
+import java.util.Random;
+
 
 public class Board extends JPanel implements ActionListener{
     
     private final int INITIAL_POSITION_X = 30;
     private final int INITIAL_POSITION_Y = 40;
-    private final int WINDOW_WIDTH = 600;
-    private final int WINDOW_HEIGHT = 600;
+    private final int WINDOW_WIDTH = 1000;
+    private final int WINDOW_HEIGHT = 800;
     private Timer timer;
     private Spaceship spaceship;
     private final int DELAY = 5;
     private ArrayList<Alien> aliens;
     private boolean in_game;
+    private int number_of_aliens = 50;
     
-    private final int[][] position_grid = {
-        {2380, 29}, {2500, 59}, {1380, 89},
-        {780, 109}, {580, 139}, {680, 539},
-        {790, 259}, {760, 320}, {790, 450},
-        {980, 209}, {560, 45}, {510, 430},
-        {930, 459}, {590, 80}, {530, 60},
-        {940, 59}, {990, 330}, {920, 200},
-        {900, 259}, {660, 550}, {540, 190},
-        {810, 320}, {860, 20}, {740, 180},
-        {820, 128}, {490, 470}, {700, 30}
-    };
     
-    public Board() {
+    int[][] position_grid = new int[number_of_aliens][2]; 
 
+    public Board() {
+      
         initialize_board();
     }
-    
+    private void number_of_enemies(int enemies) {
+        int[][] position_grid = new int[enemies][2];
+    }
     private void initialize_board() {
         
+        number_of_enemies(number_of_aliens);
+
+        for (int i=0; i< position_grid.length; i++) {
+           position_grid[i][0] = random_integer_x();
+           position_grid[i][1] = random_integer_y();
+        }
+
         addKeyListener(new key_adapter());
         setFocusable(true);
-        setBackground(Color.BLACK);
+        
         in_game = true;
         
         setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -62,6 +65,12 @@ public class Board extends JPanel implements ActionListener{
         timer.start();        
     
     } // end initialize_board method
+    
+    public void press_start(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            initialize_board();
+        }
+    }
     
     public void initialize_aliens() {
         
@@ -78,7 +87,7 @@ public class Board extends JPanel implements ActionListener{
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
+        draw_background(g);
         if (in_game == true) {
             
             draw_on_screen(g);
@@ -90,6 +99,11 @@ public class Board extends JPanel implements ActionListener{
         }
         
         Toolkit.getDefaultToolkit().sync();
+    }
+    
+    private static void draw_background(Graphics g) {
+        
+        g.drawImage(Sprite.load_background("space_background.jpg"), 0, 0, null);
     }
 
     private void draw_on_screen(Graphics g) {
@@ -125,28 +139,34 @@ public class Board extends JPanel implements ActionListener{
         int aliens_left = aliens.size();
         String message;
         String message2;
+        String message3 = null;
         
         if (aliens_left == 0) {
             message = "You WON!";
             message2 = "Congratulations!"; 
-            setBackground(Color.GREEN);
+            
         }
         
         else {
             message = "Game Over";
-            message2 = aliens.size() + " aliens left."; 
-            setBackground(Color.RED);
+            message2 = aliens.size() + " aliens left.";
+            message3 = "Press Space to Continue...";
+            
         }
         Font small = new Font("Helvetica", Font.BOLD, 16);
         FontMetrics fm = getFontMetrics(small);
         
         g.setColor(Color.WHITE);
         g.setFont(small);
-        g.drawString(message, (WINDOW_HEIGHT - fm.stringWidth(message)) / 2, WINDOW_HEIGHT / 2);
-        g.drawString(message2, (WINDOW_HEIGHT - fm.stringWidth(message2)) / 2, WINDOW_HEIGHT / 2 + 30);
+        g.drawString(message, (WINDOW_WIDTH - fm.stringWidth(message)) / 2, WINDOW_HEIGHT / 2 - 30);
+        g.drawString(message2, (WINDOW_WIDTH - fm.stringWidth(message2)) / 2, WINDOW_HEIGHT / 2 + 0);
+        g.setColor(Color.YELLOW);
+        if (message3 != null && !message3.isEmpty()) {
+            g.drawString(message3, (WINDOW_WIDTH - fm.stringWidth(message3)) / 2, WINDOW_HEIGHT / 2 + 30);
+        }
     
     }
-
+       
     @Override
     public void actionPerformed(ActionEvent e) {
         
@@ -205,13 +225,29 @@ public class Board extends JPanel implements ActionListener{
             return;
         }
         
+        int k = 0;
         for (int i = 0; i < aliens.size(); i++) {
             
             Alien an_alien = aliens.get(i);
             
             if (an_alien.is_visible()) {
-                an_alien.move();         
+                
+                if (k == 0) {    
+                    an_alien.move();
+                    k = 1;
+                }
+                
+                else {
+                    an_alien.move();
+                    an_alien.move();
+                    k = 0;
+                }
+                   
+                
+                
             }
+                
+            
             else {            
                 aliens.remove(i);
             }
@@ -220,10 +256,10 @@ public class Board extends JPanel implements ActionListener{
     
     public void check_hitboxes() {
         
-        Rectangle ship_hitbox = spaceship.getBounds();
+        Rectangle ship_hitbox = spaceship.getBounds("player");
         
         for (Alien an_alien : aliens) {
-            Rectangle alien_hitbox = an_alien.getBounds();
+            Rectangle alien_hitbox = an_alien.getBounds("not player");
             
             if(ship_hitbox.intersects(alien_hitbox)) {
                 spaceship.set_visible(false);
@@ -236,11 +272,11 @@ public class Board extends JPanel implements ActionListener{
         
         for (Missile missile : missile_array_list) {
             
-            Rectangle missile_hitbox = missile.getBounds();
+            Rectangle missile_hitbox = missile.getBounds("not player");
             
             for (Alien an_alien : aliens) {
                 
-                Rectangle alien_hitbox = an_alien.getBounds();
+                Rectangle alien_hitbox = an_alien.getBounds("not player");
                 
                 if (missile_hitbox.intersects(alien_hitbox)) {
                     missile.set_visible(false);
@@ -251,16 +287,44 @@ public class Board extends JPanel implements ActionListener{
         }
     }
     
+    public static int random_integer_x() {
+        Random rand = new Random();
+        int random_number = rand.nextInt((2000 - 600) + 1) + 600;
+        return random_number;
+    }
+    
+    public int random_integer_y() {
+        Random rand = new Random();
+        int random_number = rand.nextInt(((WINDOW_HEIGHT - 60) - 30) + 1) + 30;
+        return random_number;
+    }
+    
     private class key_adapter extends KeyAdapter {
 
         @Override
         public void keyReleased(KeyEvent e) {
+            
             spaceship.key_released(e);
+            
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            spaceship.key_pressed(e);
+            if (!in_game) {
+                try {
+                    Thread.sleep(1000);
+                    press_start(e);
+                    
+                                     
+                } catch(InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+                
+            }
+            else {
+                spaceship.key_pressed(e);
+            }
+            
         }
     }
 }

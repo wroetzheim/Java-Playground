@@ -4,7 +4,7 @@ package moving_objects;
 
 public class Missile extends Sprite {
     
-    private final int BOARD_WIDTH = 600;
+    private final int BOARD_WIDTH = 1000;
     private final int MISSILE_SPEED = 2;
     
     public Missile(int x, int y) {
@@ -15,7 +15,7 @@ public class Missile extends Sprite {
     
     private void initMissile() {
         
-        load_image("missile.png");  
+        load_image("bullet.png");  
         get_image_dimensions();
     }
     
@@ -23,7 +23,7 @@ public class Missile extends Sprite {
         
         position_x += MISSILE_SPEED;
         
-        if (position_x > BOARD_WIDTH) {
+        if (position_x > BOARD_WIDTH+10) {
             visible = false;
             //this.setVisible(false);
         }
