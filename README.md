@@ -6,6 +6,7 @@ There might or might not be any useful / functional applications contained in th
 
 Functioning Programs in this Repo:
 
-moving_objects:
-In the Java Playground repo, this moving_objects folder contains a simple spaceship arcade game. 
-https://github.com/wroetzheim/Java-Playground/tree/master/moving_objects
+Application: moving_objects.jar
+Location: root directory of Java-Playground (this) repo. 
+Description: In the Java Playground repo, this moving_objects folder contains a simple spaceship arcade game. 
+
