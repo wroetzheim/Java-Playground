@@ -52,16 +52,16 @@ public class Spaceship extends Sprite {
         switch (key) {
             
             case KeyEvent.VK_LEFT:
-                direction_x = -2; 
+                direction_x = -5; 
                 break;
             case KeyEvent.VK_RIGHT:
-                direction_x = 2;
+                direction_x = 5;
                 break;
             case KeyEvent.VK_UP:
-                direction_y = -2;
+                direction_y = -5;
                 break;
             case KeyEvent.VK_DOWN:
-                direction_y = 2;
+                direction_y = 5;
                 break;
             case KeyEvent.VK_SPACE:
                 shoot_missile();

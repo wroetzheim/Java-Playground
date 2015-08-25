@@ -5,7 +5,7 @@ package moving_objects;
 public class Missile extends Sprite {
     
     private final int BOARD_WIDTH = 1000;
-    private final int MISSILE_SPEED = 2;
+    private final int MISSILE_SPEED = 5;
     
     public Missile(int x, int y) {
         super(x, y);

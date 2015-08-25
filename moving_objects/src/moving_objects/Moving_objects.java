@@ -11,7 +11,7 @@ public class Moving_objects extends JFrame{
         initialize_ui();
     }
     
-    public void initialize_ui() {
+    private void initialize_ui() {
         
         add(new Board());
         

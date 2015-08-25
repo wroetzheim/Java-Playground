@@ -1,9 +1,6 @@
 
 package moving_objects;
 
-import java.util.Random;
-
-
 public class Alien extends Sprite {
     
     private final int INITIAL_POSITION_X = 1200;
@@ -21,9 +18,6 @@ public class Alien extends Sprite {
         get_image_dimensions();
     
     } // end initialize_alien method
-    
-    
-    
      
     public void move() {
         
@@ -31,7 +25,7 @@ public class Alien extends Sprite {
             position_x = INITIAL_POSITION_X;
         }
         
-        position_x = position_x - 1;
+        position_x = position_x - 2;
         
     } // end move method
     

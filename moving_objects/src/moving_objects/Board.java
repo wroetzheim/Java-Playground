@@ -26,10 +26,10 @@ public class Board extends JPanel implements ActionListener{
     public static final int WINDOW_HEIGHT = 700;
     private Timer timer;
     private Spaceship spaceship;
-    private final int DELAY = 5;
+    private final int DELAY = 15;
     private ArrayList<Alien> aliens;
     private boolean in_game;
-    private int number_of_aliens = 50;
+    private int number_of_aliens = 30;
     
     
     int[][] position_grid = new int[number_of_aliens][2]; 
@@ -96,6 +96,7 @@ public class Board extends JPanel implements ActionListener{
         else {
             
             draw_game_over(g);
+            in_game = false;
         }
         
         Toolkit.getDefaultToolkit().sync();
