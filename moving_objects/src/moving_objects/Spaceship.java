@@ -20,7 +20,7 @@ public class Spaceship extends Sprite {
     private void initialize_spaceship() {
         
         missiles = new ArrayList();
-        load_image("starship.png"); 
+        load_image("cat_small.png"); 
         get_image_dimensions(); 
     }
     
