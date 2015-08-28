@@ -63,7 +63,7 @@ public class Sprite {
     }
     
     public Rectangle getBounds(String sprite_type) {
-        if (sprite_type == "player") {
+        if (sprite_type.equals("player")) {
             return new Rectangle(position_x, position_y, image_width, image_height);
         }
         else {

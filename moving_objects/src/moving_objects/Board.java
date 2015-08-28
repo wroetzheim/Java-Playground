@@ -29,8 +29,12 @@ public class Board extends JPanel implements ActionListener{
     private final int DELAY = 15;
     private ArrayList<Alien> aliens;
     private boolean in_game;
-    private int number_of_aliens = 30;
+    private int number_of_aliens = 20;
     
+    int background_x = 0;
+    int background_y = -1200;
+    
+    String direction = "up";
     
     int[][] position_grid = new int[number_of_aliens][2]; 
 
@@ -61,6 +65,8 @@ public class Board extends JPanel implements ActionListener{
         
         initialize_aliens();
         
+        
+        
         timer = new Timer(DELAY, this);
         timer.start();        
     
@@ -69,6 +75,9 @@ public class Board extends JPanel implements ActionListener{
     public void press_start(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             initialize_board();
+            background_x = 0;
+            background_y = -1200;
+            direction = "up";
         }
     }
     
@@ -87,7 +96,9 @@ public class Board extends JPanel implements ActionListener{
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        draw_background(g);
+        
+        move_background(g);
+        
         if (in_game == true) {
             
             draw_on_screen(g);
@@ -100,11 +111,6 @@ public class Board extends JPanel implements ActionListener{
         }
         
         Toolkit.getDefaultToolkit().sync();
-    }
-    
-    private void draw_background(Graphics g) {
-        
-        g.drawImage(Sprite.load_background("space_background.jpg"), 0, 0, null);
     }
 
     private void draw_on_screen(Graphics g) {
@@ -133,6 +139,7 @@ public class Board extends JPanel implements ActionListener{
         
         g.setColor(Color.WHITE);
         g.drawString("Aliens left: " + aliens.size(), 5, 15);
+        g.drawString("background: " + background_x + ", " + background_y, 50, 70);
     
     }
     
@@ -248,6 +255,28 @@ public class Board extends JPanel implements ActionListener{
             } // end if visible condition
         }
     } // end update_aliens method
+    
+    private void move_background(Graphics g) {
+        
+        if (direction.equals("up")) {
+            background_x -= 5;
+            background_y -= 10;
+            if (background_x <= -600 || background_y <= -3500) {
+                direction = "down";
+                
+            }
+        }
+        else if (direction.equals("down")) {
+            background_x += 5;
+            background_y += 10;
+            if ( background_x >= -10 || background_y >= -10) {
+                direction = "up";
+                
+            }
+        }
+        g.drawImage(Sprite.load_background("HiRes.jpg"), background_x, background_y, null);
+        
+    }
     
     public void check_hitboxes() {
         

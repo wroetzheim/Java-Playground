@@ -14,7 +14,7 @@ public class Alien extends Sprite {
     
     private void initialize_alien() {
         
-        load_image("spaceship_enemy.png");
+        load_image("eric.png");
         get_image_dimensions();
     
     } // end initialize_alien method
