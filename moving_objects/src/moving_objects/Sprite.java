@@ -67,7 +67,7 @@ public class Sprite {
             return new Rectangle(position_x, position_y, image_width, image_height);
         }
         else {
-            return new Rectangle(position_x, position_y, image_width, image_height);
+            return new Rectangle(position_x + 2, position_y + 2 , image_width - 5, image_height - 5);
         }
         
     }

@@ -34,7 +34,8 @@ public class Board extends JPanel implements ActionListener{
     int background_x = 0;
     int background_y = -1200;
     
-    String direction = "up";
+    String y_direction = "up";
+    String x_direction = "left";
     
     int[][] position_grid = new int[number_of_aliens][2]; 
 
@@ -64,9 +65,7 @@ public class Board extends JPanel implements ActionListener{
         spaceship = new Spaceship(INITIAL_POSITION_X, INITIAL_POSITION_Y);
         
         initialize_aliens();
-        
-        
-        
+
         timer = new Timer(DELAY, this);
         timer.start();        
     
@@ -77,7 +76,8 @@ public class Board extends JPanel implements ActionListener{
             initialize_board();
             background_x = 0;
             background_y = -1200;
-            direction = "up";
+            y_direction = "up";
+            x_direction = "left";
         }
     }
     
@@ -139,7 +139,7 @@ public class Board extends JPanel implements ActionListener{
         
         g.setColor(Color.WHITE);
         g.drawString("Aliens left: " + aliens.size(), 5, 15);
-        g.drawString("background: " + background_x + ", " + background_y, 50, 70);
+       // g.drawString("background: " + background_x + ", " + background_y, 50, 70);
     
     }
     
@@ -258,22 +258,36 @@ public class Board extends JPanel implements ActionListener{
     
     private void move_background(Graphics g) {
         
-        if (direction.equals("up")) {
-            background_x -= 5;
-            background_y -= 10;
-            if (background_x <= -600 || background_y <= -3500) {
-                direction = "down";
-                
+        if (y_direction.equals("up")) {
+            
+            background_y -= 2;
+            if (background_y <= -3700) {
+                y_direction = "down";
             }
         }
-        else if (direction.equals("down")) {
-            background_x += 5;
-            background_y += 10;
-            if ( background_x >= -10 || background_y >= -10) {
-                direction = "up";
-                
+        
+        if (y_direction.equals("down")) {
+           
+            background_y += 1;
+            if (background_y >= -10) {
+                y_direction = "up";
             }
         }
+        
+        if (x_direction.equals("left")) {
+            background_x += 1;
+            if (background_x >= -10) {
+                x_direction = "right";
+            }
+        }
+        
+        if (x_direction.equals("right")) {
+            background_x -= 2;
+            if (background_x <= -2300) {
+                x_direction = "left";
+            }
+        }
+        
         g.drawImage(Sprite.load_background("HiRes.jpg"), background_x, background_y, null);
         
     }
